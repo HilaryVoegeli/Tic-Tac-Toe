@@ -1,10 +1,10 @@
-const Square = ({id, newState}) => {
+const Square = ({id, newState, end}) => {
     const [status, setStatus] = React.useState(null);
     const [fill, setFill] = React.useState(false);
     const xo = ["O", "X"]; 
     
     return(
-        <button className={status ? 'orange' : 'purple'}
+        <button disabled= {end === true} className={status ? 'orange' : 'purple'}
         onClick={(e) => {
           let nextplayer = newState(id);
           setFill(true);
@@ -21,11 +21,12 @@ const Square = ({id, newState}) => {
 const Board = () => {
   const [player, setPlayer] = React.useState(1);
   const [state, setState] = React.useState(Array(9).fill(null));
+  let end = false;
   let status = `Player ${player}`;
   let winner = checkWinner(state);
   if(winner != null) {
+    end = true;
     status = `Player ${winner} wins!`;
-    alert(`Player ${winner} wins!`);
   }
 
   const newState = idOfSquare => {
