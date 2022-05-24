@@ -4,23 +4,24 @@ const Square = ({id, newState, end}) => {
     const xo = ["O", "X"]; 
     
     return(
-        <button disabled= {end === true} className={status ? 'orange' : 'purple'}
+        <button disabled={end === true} className={status ? 'orange' : 'purple'}
         onClick={(e) => {
           let nextplayer = newState(id);
           setFill(true);
           if (fill == true) {
-            onClick == null; 
+            onClick == null;
           }
           setStatus(nextplayer);
-        }}> 
-            <h1 className="status">{xo[status]}</h1>  
-        </button>
+        } }>
+        <h1 className="status">{xo[status]}</h1>
+      </button>
     )
 }
 
 const Board = () => {
   const [player, setPlayer] = React.useState(1);
   const [state, setState] = React.useState(Array(9).fill(null));
+  const [show, setShow] = React.useState(false);
   let end = false;
   let status = `Player ${player}`;
   let winner = checkWinner(state);
@@ -39,7 +40,7 @@ const Board = () => {
   };
 
   function renderSquare (i) {
-      return <Square id={i} player={player} newState={newState}></Square>;
+      return <Square end={end} id={i} player={player} newState={newState}></Square>;
   }
 
   function checkWinner(state) {
@@ -88,7 +89,9 @@ const Board = () => {
       </div>
       <div id="info">
         <h1>{status}</h1>
+        
       </div>
+      <button onClick={reset()}>Reset</button>
     </div>
   );
 };
